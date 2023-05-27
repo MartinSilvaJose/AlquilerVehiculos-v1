@@ -1,12 +1,13 @@
-package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio;
+package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.*;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
 
-public class Clientes {
+public class Clientes implements IClientes {
 	
 	
 	//DECLARACION
@@ -23,6 +24,7 @@ public class Clientes {
 	
 	//METODOS DE CLASE
 	
+	@Override
 	public List<Cliente> get() {
 		List <Cliente> copia=new ArrayList<>();
 		for(Cliente i:coleccionClientes) {
@@ -31,11 +33,13 @@ public class Clientes {
 		return copia;
 	}
 	
+	@Override
 	public int getCantidad() {
 		return coleccionClientes.size();
  
 	}
 	
+	@Override
 	public void insertar(Cliente cliente) throws OperationNotSupportedException {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: No se puede insertar un cliente nulo.");
@@ -46,6 +50,7 @@ public class Clientes {
 		coleccionClientes.add(cliente);
 	}
 	
+	@Override
 	public Cliente buscar(Cliente cliente) {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: No se puede buscar un cliente nulo.");
@@ -58,6 +63,7 @@ public class Clientes {
 		return null;
 	}
 	
+	@Override
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: No se puede borrar un cliente nulo.");
@@ -68,6 +74,7 @@ public class Clientes {
 		coleccionClientes.remove(cliente);
 	}
 	
+	@Override
 	public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: No se puede modificar un cliente nulo.");
@@ -76,21 +83,17 @@ public class Clientes {
 		if(!coleccionClientes.contains(cliente)) {
 			throw new OperationNotSupportedException("ERROR: No existe ningún cliente con ese DNI.");
 		}
-		if(nombre==null || telefono==null) {
-			if(nombre==null && telefono!=null) {
-				buscar(cliente).setTelefono(telefono);
-			}
-			if(telefono==null && nombre!=null) {
-				buscar(cliente).setNombre(nombre);
-			}
-		}else {
+		if(nombre==null && telefono!=null) {
+			buscar(cliente).setTelefono(telefono);
+		}
+		else if(telefono==null && nombre!=null) {
+			buscar(cliente).setNombre(nombre);
+		}
+		else {
 			buscar(cliente).setTelefono(telefono);
 			buscar(cliente).setNombre(nombre);
 		}
-
-
-
-		
+	
 	}
 	
 }

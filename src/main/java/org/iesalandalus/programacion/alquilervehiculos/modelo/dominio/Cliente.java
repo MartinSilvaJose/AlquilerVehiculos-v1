@@ -8,9 +8,9 @@ public class Cliente {
 	
 	//DECLARACIÓN
 	
-	private String ER_NOMBRE="[A-Z][a-zñ]+( [A-Z][a-zñ]+)*";
-	private String ER_DNI="[0-9]{8}[a-zA-Z]";
-	private String ER_TELEFONO="[0-9]{9}";
+	private final String ER_NOMBRE="[A-Z][a-zñ]+( [A-Z][a-zñ]+)*";
+	private final  String ER_DNI="[0-9]{8}[a-zA-Z]";
+	private final String ER_TELEFONO="[0-9]{9}";
 	private String nombre,dni,telefono;
 	
 	
@@ -49,14 +49,15 @@ public class Cliente {
 		if(!nombre.matches(ER_NOMBRE)) {
 			throw new IllegalArgumentException("ERROR: El nombre no tiene un formato válido.");
 		}
-		String nombreAGuardar="";
-		String [] palabras = nombre.trim().split("\\s");
-		for(String i:palabras) {
-			i.toUpperCase().charAt(0);
-			nombreAGuardar=nombreAGuardar+i+" ";
-		}
-		nombreAGuardar=nombreAGuardar.trim();
-		this.nombre = nombreAGuardar;
+//		String nombreAGuardar="";
+//		String [] palabras = nombre.trim().split("\\s");
+//		for(String i:palabras) {
+//			String letraMayus=i.toUpperCase().charAt(0)+"";
+////			
+////			nombreAGuardar+=letraMayus+i.substring(1)+" ";
+////		}
+//		nombreAGuardar=nombreAGuardar.trim();
+		this.nombre = nombre;
 	}
 	
 	
@@ -111,7 +112,10 @@ public class Cliente {
 		}
 		int calculo=(Integer.parseInt(dni.substring(0,8)))%23;
 		char letraDni=dni.toUpperCase().charAt(8);
-		char [] letraPosible= {'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
+		char [] letraPosible= {
+			'T','R','W','A','G','M','Y','F','P','D','X','B','N',
+			'J','Z','S','Q','V','H','L','C','K','E'
+			};
 		
 		
 		if(letraPosible[calculo]==letraDni)  {
